@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+import sys
+import subprocess
+
+
+def usage():
+  print('''
+    git qb <file>:begin,end args...
+    git qb <file>:begin,+n args...
+    git qb <file>:line args...
+''')
+  exit(1)
+
+# git qb <file>:1,2 = git log -L1,2:file
+def main():
+  if len(sys.argv) < 2:
+    usage()
+
+  blame_path_with_line=sys.argv[1]
+  parts=blame_path_with_line.rsplit(":", 1)
+
+  if len(parts) < 2:
+    usage()
+
+  file=parts[0]
+  line=parts[1]
+
+  try:
+    line.index(",")
+    line.index("+")
+  except ValueError:
+    line += ",+1"
+  finally:
+    cmd = ["git", "log" ,"-L" + line + ":" + file, ]
+    if len(sys.argv) > 2:
+        cmd.extend(sys.argv[2:])
+    subprocess.run(cmd)
+
+main()

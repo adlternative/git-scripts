@@ -1,0 +1,9 @@
+#!/bin/sh
+
+n=$1
+
+# 使用for循环遍历N次
+for ((i=1;i<=n;i++))
+do
+	git create-commit $i
+done

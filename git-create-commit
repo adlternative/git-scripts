@@ -1,0 +1,6 @@
+#!/bin/sh
+
+value=$1
+echo $value >$value
+git add $value
+git commit -m hello$value
