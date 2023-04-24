@@ -1,0 +1,7 @@
+git add . && git commit --amend -C HEAD
+
+
+branch=$(git branch --show-current)
+if [[ "$*" == *--push* ]]; then
+    git push -f origin $branch
+fi
